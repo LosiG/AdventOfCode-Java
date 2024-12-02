@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 import javax.print.DocFlavor.INPUT_STREAM;
 
-public class Main {
+public class Day1 {
     static final String INPUT_PATH = "input.txt";
 
     public static void main(String[] args) {
