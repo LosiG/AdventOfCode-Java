@@ -11,7 +11,7 @@ import java.util.Scanner;
 import javax.print.DocFlavor.INPUT_STREAM;
 
 public class Day1 {
-    static final String INPUT_PATH = "input.txt";
+    static final String INPUT_PATH = "input-01.txt";
 
     public static void main(String[] args) {
         ArrayList<String> data = new ArrayList<>();
