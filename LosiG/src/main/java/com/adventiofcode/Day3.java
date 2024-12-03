@@ -63,5 +63,33 @@ public class Day3 {
     }
 
     private static void exercise2(ArrayList<String> data) {
+        int result = 0;
+        String corruptedMul = "";
+        for (int i = 0; i < data.size(); i++) {
+            corruptedMul = corruptedMul.concat(data.get(i));
+        }
+        corruptedMul = corruptedMul.concat("do()");
+        Pattern doAndDontPattern = Pattern.compile("don't\\(\\)[\\S\\s]*?do\\(\\)");
+        Pattern mulPatternSearcher = Pattern.compile("mul\\(\\d{1,3},\\d{1,3}\\)");
+
+        Matcher matchDoAndDont = doAndDontPattern.matcher(corruptedMul);
+        while (matchDoAndDont.find()) {
+            corruptedMul = corruptedMul.replace(matchDoAndDont.group(), "");
+
+        }
+        System.out.println(corruptedMul);
+
+        Matcher matcher = mulPatternSearcher.matcher(corruptedMul);
+        while (matcher.find()) {
+            String matchGroup = matcher.group();
+            String values = matchGroup.split("\\(")[1];
+            values = values.substring(0, values.length() - 1);
+
+            int[] parsedValue = Arrays.stream(values.split(",")).mapToInt(Integer::parseInt).toArray();
+
+            result += (parsedValue[0] * parsedValue[1]);
+
+        }
+        System.out.println(result);
     }
 }
