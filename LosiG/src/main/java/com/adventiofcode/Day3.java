@@ -35,16 +35,26 @@ public class Day3 {
         for (int i = 0; i < data.size(); i++) {
             String corruptedMul = data.get(i);
 
-            Pattern pattern = Pattern.compile("mul\\(\\d{1,3},\\d{1,3}\\)");
+            Pattern doAndDontPattern = Pattern.compile("don't\\(\\)\\S{1,}do\\(\\)");
+            Pattern mulPatternSearcher = Pattern.compile("mul\\(\\d{1,3},\\d{1,3}\\)");
 
-            Matcher matcher = pattern.matcher(corruptedMul);
+            Matcher matchDoAndDont = doAndDontPattern.matcher(corruptedMul);
 
-            while (matcher.find()) {
-                String values = matcher.group().split("\\(")[1];
-                values = values.substring(0, values.length() - 1);
+            while (matchDoAndDont.find()) {
+                String refinedString = matchDoAndDont.replaceAll("-");
+                System.out.println(refinedString);
+                Matcher matcher = mulPatternSearcher.matcher(refinedString);
 
-                int[] parsedValue = Arrays.stream(values.split(",")).mapToInt(Integer::parseInt).toArray();
-                result += parsedValue[0] * parsedValue[1];
+                while (matcher.find()) {
+                    String matchGroup = matcher.group();
+                    // System.out.println(matchGroup);
+                    String values = matchGroup.split("\\(")[1];
+                    values = values.substring(0, values.length() - 1);
+
+                    int[] parsedValue = Arrays.stream(values.split(",")).mapToInt(Integer::parseInt).toArray();
+                    result += parsedValue[0] * parsedValue[1];
+
+                }
 
             }
 
