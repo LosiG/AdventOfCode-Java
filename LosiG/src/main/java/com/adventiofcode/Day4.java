@@ -29,14 +29,12 @@ public class Day4 {
             e.printStackTrace();
         }
 
-        exercise1(data);
+        // exercise1(data);
         exercise2(data);
 
     }
 
     private static void exercise1(ArrayList<String[]> data) {
-        checkIfWordIsInAnyDirectionOfAStringMatrix(data, "XMAS");
-
         ArrayList<String> linedData = tranformMatrixToLinedDataOfPossibleDirections(data);
 
         Pattern patternXmas = Pattern.compile("XMAS");
@@ -141,11 +139,31 @@ public class Day4 {
         return linedData;
     }
 
-    private static void checkIfWordIsInAnyDirectionOfAStringMatrix(ArrayList<String[]> data, String word) {
-
-    }
-
     private static void exercise2(ArrayList<String[]> data) {
 
+        int matches = 0;
+
+        for (int index = 1; index < data.size() - 1; index++) {
+            String[] currentLine = data.get(index);
+            String[] previewsLine = data.get(index - 1);
+            String[] nextLine = data.get(index + 1);
+
+            for (int i = 1; i < currentLine.length - 1; i++) {
+                if (currentLine[i].equals("A") && isPreviewsAndNextLineEqualMandSorSandM(previewsLine, nextLine, i)) {
+                    matches++;
+                }
+            }
+        }
+
+        System.out.println(matches);
+
     }
+
+    private static boolean isPreviewsAndNextLineEqualMandSorSandM(String[] previewsLine, String[] nextLine, int index) {
+        return (previewsLine[index - 1].equals("M") && nextLine[index + 1].equals("S")
+                || previewsLine[index - 1].equals("S") && nextLine[index + 1].equals("M"))
+                && (previewsLine[index + 1].equals("M") && nextLine[index - 1].equals("S")
+                        || previewsLine[index + 1].equals("S") && nextLine[index - 1].equals("M"));
+    }
+
 }
